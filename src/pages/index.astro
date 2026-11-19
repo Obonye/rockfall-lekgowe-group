@@ -1,17 +1,261 @@
 ---
 import Layout from "@/layouts/main.astro"
-import { Button } from "@/components/ui/button"
+import { ConsultationForm } from "@/components/consultation-form"
+import { MobileNav } from "@/components/mobile-nav"
+import { PracticeCarousel } from "@/components/practice-carousel"
+import { AuroraBackground } from "@/components/ui/aurora-background"
+import { buttonVariants } from "@/components/ui/button"
+import { Card, CardContent, CardDescription } from "@/components/ui/card"
+import { Separator } from "@/components/ui/separator"
+
+// Placeholder contact details for the pitch. Replace with the firm's real ones.
+const contact = {
+  phone: "+00 000 000 0000",
+  phoneHref: "tel:+000000000000",
+  whatsappHref: "https://wa.me/000000000000",
+  email: "info@rockfalllekgowe.example",
+}
+
+const matters = [
+  {
+    n: "2.1",
+    key: "property",
+    title: "Property & conveyancing",
+    body: "Buying, selling and leasing, handled step by step so the transfer is clean and on schedule.",
+    typical: ["Transfers and sales", "Lease agreements", "Title and ownership queries"],
+  },
+  {
+    n: "2.2",
+    key: "litigation",
+    title: "Litigation & dispute resolution",
+    body: "Practical advice on whether to settle or fight, and firm representation when a dispute cannot be avoided.",
+    typical: ["Civil and commercial disputes", "Negotiation and settlement", "Court representation"],
+  },
+  {
+    n: "2.3",
+    key: "commercial",
+    title: "Commercial & corporate",
+    body: "Sound legal footing for businesses at every stage, from first contracts to day-to-day compliance.",
+    typical: ["Company formation", "Contracts and agreements", "Regulatory compliance"],
+  },
+]
+
+const steps = [
+  { phase: "Consult", title: "Tell us what happened", body: "Send the form or message us on WhatsApp. A few lines is enough to start." },
+  { phase: "Estimate", title: "Get our view and a price", body: "We tell you where you stand, what we recommend and what it should cost, in writing, before any work begins." },
+  { phase: "Act", title: "We handle the work", body: "One named person runs your matter and updates you at each stage, in plain language." },
+  { phase: "Close", title: "We finish properly", body: "We confirm the outcome, settle the final account and tell you what, if anything, is left for you to do." },
+]
 ---
 
+<!--
+  DIRECTION CONTRACT
+  THESIS: The homepage is a letter of engagement. Each section is a numbered clause the firm signs up to; it refuses the hero + icon-card-grid + testimonial-carousel law-firm template.
+  OWN-WORLD: Counsel. Navy ink on paper-grey ground, white document panels with 1px hairlines, 0px corners, Hanken Grotesk titles over Inter text. Burgundy appears only on the final submit action and flagged placeholders.
+  STORY: Visitor sees efficient, affordable quality made concrete, sees the three matters acted in, understands how an engagement runs, and instructs the firm via the form.
+  FIRST VIEWPORT: Light aurora background (Aceternity), navy headline, content centered, red primary and outline secondary; a hairline row inside the hero carries three commitments. Below: navy process band and navy-tint instruction field.
+  FORM: Clause-numbered engagement letter. Position 4 of 7 on the grounded list; seed key 69788854 (surface, persuade).
+-->
+
 <Layout>
-  <div class="flex min-h-svh p-6">
-    <div class="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-      <div>
-        <h1 class="font-medium">Project ready!</h1>
-        <p>You may now add components and start building.</p>
-        <p>We've already added the button component for you.</p>
-        <Button client:load className="mt-2">Button</Button>
+  <header id="site-header" class="group fixed inset-x-0 top-0 z-30 transition-[top,background-color] duration-300 data-[scrolled=true]:top-0 data-[scrolled=true]:bg-navy-deep">
+    <div class="mx-auto flex h-20 max-w-[1200px] items-center justify-between px-5 sm:px-10">
+      <a href="#top" class="font-heading text-navy text-xl leading-tight font-bold group-data-[scrolled=true]:text-white">
+        Rockfall Lekgowe <span class="font-semibold">Group</span>
+      </a>
+      <nav aria-label="Primary" class="hidden items-center gap-9 text-base font-semibold md:flex">
+        <a href="#practice-areas" class="text-ink/80 hover:text-ink group-data-[scrolled=true]:text-white/80 group-data-[scrolled=true]:hover:text-white">Practice areas</a>
+        <a href="#process" class="text-ink/80 hover:text-ink group-data-[scrolled=true]:text-white/80 group-data-[scrolled=true]:hover:text-white">Process</a>
+        <a href="#clients" class="text-ink/80 hover:text-ink group-data-[scrolled=true]:text-white/80 group-data-[scrolled=true]:hover:text-white">Clients</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#consultation" class={buttonVariants({ variant: "accent", size: "xl", className: "max-md:hidden" })}>
+          Contact us <span aria-hidden="true">↗</span>
+        </a>
+        <MobileNav client:load />
       </div>
     </div>
-  </div>
+  </header>
+
+  <main id="top">
+    <!-- Opening statement: Aceternity aurora background on a light paper ground, navy text, content centered, commitments as a quiet hairline row at the foot of the hero -->
+    <section class="bg-paper flex flex-col">
+      <AuroraBackground client:load>
+        <div class="mx-auto flex w-full max-w-[1200px] flex-1 flex-col items-center justify-center px-5 pt-32 pb-16 text-center sm:px-10 md:pt-36 md:pb-24">
+          <h1 class="open-settle text-navy max-w-5xl text-fluid-display font-bold">
+            Efficient quality.<br class="hidden sm:block" /> Affordable legal services.
+          </h1>
+          <p class="open-settle-2 text-slate mt-8 max-w-3xl text-fluid-lead">
+            You should not have to choose between a good lawyer and a fair bill. We handle property, dispute and
+            commercial matters with a fee estimate up front and a straight answer when you ask.
+          </p>
+          <div class="open-settle-2 mt-9 flex flex-wrap justify-center gap-3">
+            <a href="#consultation" class={buttonVariants({ variant: "accent", size: "xl" })}>
+              Request a consultation <span aria-hidden="true">↗</span>
+            </a>
+            <a href="#practice-areas" class={buttonVariants({ variant: "tint", size: "xl" })}>
+              Explore our matters <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </div>
+        <dl class="mx-auto grid w-full max-w-[1200px] px-5 pb-10 text-center sm:grid-cols-4 sm:px-10">
+          <div class="border-navy/15 py-5 sm:border-t sm:pr-6">
+            <dt class="text-navy text-fluid-stat font-semibold tabular-nums">1,200+</dt>
+            <dd class="text-ink mt-2 text-sm font-semibold">Matters handled</dd>
+            <dd class="text-slate mt-0.5 text-sm">Sample figure · placeholder</dd>
+          </div>
+          <div class="border-navy/15 py-5 sm:border-t sm:px-6">
+            <dt class="text-navy text-fluid-stat font-semibold tabular-nums">92%</dt>
+            <dd class="text-ink mt-2 text-sm font-semibold">Resolved without trial</dd>
+            <dd class="text-slate mt-0.5 text-sm">Sample figure · placeholder</dd>
+          </div>
+          <div class="border-navy/15 py-5 sm:border-t sm:px-6">
+            <dt class="text-navy text-fluid-stat font-semibold tabular-nums">24h</dt>
+            <dd class="text-ink mt-2 text-sm font-semibold">Average first response</dd>
+            <dd class="text-slate mt-0.5 text-sm">Sample figure · placeholder</dd>
+          </div>
+          <div class="border-navy/15 py-5 sm:border-t sm:pl-6">
+            <dt class="text-navy text-fluid-stat font-semibold tabular-nums">15 yrs</dt>
+            <dd class="text-ink mt-2 text-sm font-semibold">Combined experience</dd>
+            <dd class="text-slate mt-0.5 text-sm">Sample figure · placeholder</dd>
+          </div>
+        </dl>
+      </AuroraBackground>
+    </section>
+
+    <!-- Clause 1: practice areas -->
+    <section id="practice-areas" class="mx-auto max-w-[1200px] overflow-hidden px-5 py-16 sm:px-10 md:py-24">
+      <h2 class="text-fluid-h2 font-bold">Practice areas</h2>
+      <p class="text-slate mt-4 max-w-xl leading-relaxed">
+        Three areas, done properly, with a fee estimate up front. Choose the one closest to your matter.
+      </p>
+      <div class="mt-10">
+        <PracticeCarousel client:load areas={matters} />
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" class="bg-navy text-white">
+      <div class="mx-auto max-w-[1200px] px-5 py-16 sm:px-10 md:py-24">
+        <h2 class="mx-auto max-w-3xl text-center text-fluid-h2 font-bold">How we work with you<span class="text-[#d9505c]">.</span></h2>
+        <ol class="mt-16 grid gap-12 text-center md:grid-cols-4 md:gap-8">
+          {
+            steps.map((s) => (
+              <li>
+                <span class="text-[0.6875rem] leading-4 font-bold tracking-[0.12em] text-white/60 uppercase">{s.phase}</span>
+                <h3 class="mt-3 text-fluid-step font-semibold text-[#9db8ff]">{s.title}<span class="text-[#d9505c]">.</span></h3>
+                <p class="mx-auto mt-3 max-w-[17rem] text-base leading-relaxed text-white/80">{s.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+        <div class="mt-14 flex justify-center">
+          <a href="#consultation" class={buttonVariants({ variant: "accent", size: "xl" })}>
+            Contact us <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clients -->
+    <section id="clients" class="bg-white">
+      <div class="mx-auto max-w-[1200px] px-5 py-16 sm:px-10 md:py-24">
+        <div class="text-center">
+          <h2 class="text-fluid-h2 font-bold">What clients say<span class="text-burgundy">.</span></h2>
+        </div>
+
+        <figure class="mx-auto mt-14 max-w-4xl text-center">
+          <span aria-hidden="true" class="font-heading text-burgundy block h-12 text-7xl leading-[1] font-bold">“</span>
+          <blockquote class="font-heading text-navy text-fluid-quote font-semibold tracking-tight">
+            I knew what it would cost before they started, and the final bill matched.
+          </blockquote>
+          <figcaption class="text-slate mt-6 text-sm">[Client name] · [Matter type]</figcaption>
+        </figure>
+
+        <div class="mt-16 grid gap-5 md:grid-cols-3">
+          {
+            [
+              { topic: "Speed", quote: "I had a real answer the next morning, not an automated reply.", who: "[Client name] · [Matter type]" },
+              { topic: "Clarity", quote: "They explained my options in plain language and told me what they would do.", who: "[Client name] · [Matter type]" },
+              { topic: "Communication", quote: "I never had to chase for an update. They told me before I asked.", who: "[Client name] · [Matter type]" },
+            ].map((t) => (
+              <Card className="[--card:var(--paper)] [--card-spacing:--spacing(7)]">
+                <CardContent className="flex h-full flex-col">
+                  <CardDescription className="label-caps text-burgundy">{t.topic}</CardDescription>
+                  <blockquote class="text-ink mt-3 text-lg leading-snug font-medium">“{t.quote}”</blockquote>
+                  <p class="text-slate mt-auto pt-6 text-sm">{t.who}</p>
+                </CardContent>
+              </Card>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="consultation" class="bg-navy-tint">
+      <div class="mx-auto grid max-w-[1200px] gap-10 px-5 py-16 sm:px-10 md:py-24 lg:grid-cols-12 lg:gap-6">
+        <div class="lg:col-span-5">
+          <h2 class="text-fluid-h2 font-bold">Get in touch<span class="text-burgundy">.</span></h2>
+          <p class="text-slate mt-4 max-w-md leading-relaxed">
+            Send us a message and we will reply within one business day with next steps and a fee estimate. Prefer to talk? Use any of these.
+          </p>
+          <div class="mt-8 max-w-md">
+            <Separator className="bg-navy/20" />
+            <div>
+              <a href={contact.phoneHref} class="hover:bg-white/60 flex items-baseline justify-between gap-4 py-4">
+                <span class="label-caps text-slate">Phone</span>
+                <span class="text-navy font-semibold">{contact.phone}</span>
+              </a>
+            </div>
+            <Separator className="bg-navy/20" />
+            <div>
+              <a href={contact.whatsappHref} class="hover:bg-white/60 flex items-baseline justify-between gap-4 py-4">
+                <span class="label-caps text-slate">WhatsApp</span>
+                <span class="text-navy font-semibold">Start a chat</span>
+              </a>
+            </div>
+            <Separator className="bg-navy/20" />
+            <div>
+              <a href={`mailto:${contact.email}`} class="hover:bg-white/60 flex items-baseline justify-between gap-4 py-4">
+                <span class="label-caps text-slate">Email</span>
+                <span class="text-navy font-semibold break-all">{contact.email}</span>
+              </a>
+            </div>
+            <Separator className="bg-navy/20" />
+          </div>
+          <p class="text-slate mt-4 text-xs">Contact details shown are placeholders.</p>
+        </div>
+        <div class="lg:col-span-7">
+          <ConsultationForm client:load />
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-navy text-white">
+    <div class="mx-auto grid max-w-[1200px] gap-8 px-5 py-12 sm:px-10 md:grid-cols-2">
+      <div>
+        <p class="font-heading text-xl font-bold">Rockfall Lekgowe Group</p>
+        <p class="mt-2 text-sm text-[#c9d2ea]">Efficient quality and affordable legal services.</p>
+      </div>
+      <div class="text-sm text-[#c9d2ea] md:text-right">
+        <p>Registration and regulatory details: placeholder, to be supplied by the firm.</p>
+        <p class="mt-2">© Rockfall Lekgowe Group. This site does not constitute legal advice.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const header = document.getElementById("site-header")
+    const syncHeader = () => header?.setAttribute("data-scrolled", String(window.scrollY > 32))
+    syncHeader()
+    window.addEventListener("scroll", syncHeader, { passive: true })
+
+    document.querySelectorAll<HTMLElement>("[data-matter]").forEach((el) => {
+      el.addEventListener("click", () => {
+        window.dispatchEvent(new CustomEvent("select-matter", { detail: el.dataset.matter }))
+      })
+    })
+  </script>
 </Layout>

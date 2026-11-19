@@ -10,4 +10,6 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [react()],
+  // Listen on all network interfaces so other devices on the same Wi-Fi can open the site.
+  server: { host: true },
 })
